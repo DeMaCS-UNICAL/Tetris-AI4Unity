@@ -15,11 +15,12 @@ public class Tetromino : MonoBehaviour {
     private float fallingTime;
     private TetrominoSpawner spawner;
     private SwipeInput input;
+    private Arena arena;
 
     void Start() {
         ai = GameObject.FindObjectOfType<AIPlayer>();
         rotationTiles = GetComponentsInChildren<TetrominoRotationTile>();
-
+        arena = GameObject.FindObjectOfType<Arena>();
         for (int i = 1; i < transform.childCount; ++i) tetrominoTiles[i - 1] = transform.GetChild(i).GetComponent<TetrominoTile>();
         game = Camera.main.GetComponent<Game>();
         input = Camera.main.GetComponent<SwipeInput>();
@@ -110,8 +111,17 @@ public class Tetromino : MonoBehaviour {
 
     private void endFalling() {
         removeFromInputEvents();
-        foreach (var tile in tetrominoTiles) tile.endFalling();
-
+        int maxRow = 0;
+        for (int i = 0; i < tetrominoTiles.Length; i++)
+        {
+            tetrominoTiles[i].endFalling();
+            if (tetrominoTiles[i].position.y > maxRow)
+            {
+                maxRow = tetrominoTiles[i].position.y;
+            }
+            
+        }
+        arena.checkRows(maxRow);
         spawner.spawn();
         Destroy(transform.GetChild(0).gameObject); //Rotation colliders
         Destroy(GetComponent<Rigidbody>());

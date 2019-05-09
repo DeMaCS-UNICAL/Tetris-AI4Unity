@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class TetrominoTile : MonoBehaviour {
-    private ArenaTile position;
+    public ArenaTile position;
     private Arena arena;
 
     void Start() {
@@ -73,4 +74,6 @@ public class TetrominoTile : MonoBehaviour {
 
         endFalling();
     }
+
+    
 }

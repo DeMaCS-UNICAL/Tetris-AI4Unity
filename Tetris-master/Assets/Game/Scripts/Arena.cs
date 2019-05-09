@@ -30,14 +30,14 @@ public class Arena : MonoBehaviour {
             }
         }
 
-        StartCoroutine(checkRowCoroutine());
+        //StartCoroutine(checkRowCoroutine());
     }
 
     public void addRowToCheck(int row) {
         if(!rowsToCheck.Contains(row)) rowsToCheck.Enqueue(row);
     }
 
-    private IEnumerator checkRowCoroutine() {
+    /*private IEnumerator checkRowCoroutine() {
         while(true) {
             if (rowsToCheck.Count == 0) yield return null;
             else {
@@ -46,9 +46,19 @@ public class Arena : MonoBehaviour {
                 yield return new WaitForEndOfFrame();
             }
         }
-    }
+    }*/
 
-    private void checkRow(int row) {
+    public void checkRows(int r)
+    {
+        for(int i=0;i<4; i++) {
+            if (!checkRow(r) && r>0)
+            {
+                r--;
+            }
+        }
+        
+    }
+    private bool checkRow(int row) {
         int counter = 0;
 
         for (int x = 0; x < maxTileX; ++x) {
@@ -64,7 +74,9 @@ public class Arena : MonoBehaviour {
             for (int y = row - 1; y >= 0; --y) {
                 for (int x = 0; x < maxTileX; ++x) tile[x, y].tetrominoFalldown();
             }
+            return true;
         }
+        return false;
     }
 
     private void Update()

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -50,4 +51,5 @@ public class Game : MonoBehaviour {
         AsyncOperation async = SceneManager.LoadSceneAsync("MainMenu");
         yield return async;
     }
+    
 }
