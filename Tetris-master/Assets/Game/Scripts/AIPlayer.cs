@@ -20,10 +20,10 @@ namespace Assets.Scripts
         int numOfLateralMove;
         int numOfRotation;
         string typeOfLateralMove = "";//left, right
-        int oldTetromino=-1;
+        int currentProgressive;
         bool tetrominoChanged;
         int currentTetromino;
-        int aiTetromino;
+        int aiProgressive;
         public bool moveDone;
         Brain brain;
         TetrominoSpawner spawner;
@@ -35,12 +35,12 @@ namespace Assets.Scripts
             end = Vector3.zero;
             brain = GameObject.FindObjectOfType<Brain>();
             spawner = GameObject.FindObjectOfType<TetrominoSpawner>();
-            InvokeRepeating("move",4,1f);
+            //StartCoroutine("move");
             
-            InvokeRepeating("updateTetromino", 0, 0.2f);
+            InvokeRepeating("move", 0, 0.2f);
         }
 
-        public void updateTetromino()
+        /*public void updateTetromino()
         {
             // Debug.Log("updating tetromino");
             if (spawner.spawned)
@@ -50,15 +50,15 @@ namespace Assets.Scripts
                 spawner.spawned = false;
             }
             
-        }
+        }*/
 
         public void move()
         {
             
-            
             //Debug.Log("trying to move");
-
-            if (brain.areActuatorsReady() &&   tetrominoChanged)
+            currentTetromino = spawner.lastInstantiated;
+            currentProgressive = spawner.progressiveNumber;
+            if (brain.areActuatorsReady() && currentProgressive != aiProgressive)
             {
                 //Debug.Log("updating actuators");
                 moveDone = true;
@@ -69,22 +69,18 @@ namespace Assets.Scripts
                 brain.setActuatorsReady(false);
                 start = Vector3.zero;
                 end = Vector3.zero;
-                if (currentTetromino == aiTetromino)
-                {
-                    tetrominoChanged = false;
-                }
             }
             
-            if (currentTetromino == aiTetromino && numOfMove > 0 && moveDone)
+            if (currentProgressive == aiProgressive && numOfMove > 0 && moveDone)
             {
                 
                 moveDone = false;
-                Debug.Log("I have to do something");
+                //Debug.Log("I have to do something");
                 numOfMove--;
                 if (numOfRotation > 0)
                 {
                     
-                    Debug.Log("Rotating");
+                    //Debug.Log("Rotating");
                     numOfRotation--;
                     start = new Vector3(0, 0, 0);
                     end = new Vector3(0, 100, 0);
@@ -97,7 +93,7 @@ namespace Assets.Scripts
                     numOfLateralMove--;
                     if (typeOfLateralMove.Equals("left"))
                     {
-                        Debug.Log("Moving left ");
+                        //Debug.Log("Moving left ");
                         start = new Vector3(100, 0, 0);
                         end = new Vector3(0, 0, 0);
                         previousStart = new Vector3(100, 0, 0);
@@ -105,7 +101,7 @@ namespace Assets.Scripts
                     }
                     else
                     {
-                        Debug.Log("Moving right ");
+                        //Debug.Log("Moving right ");
                         start = new Vector3(0, 0, 0);
                         end = new Vector3(100, 0, 0);
                         previousStart = new Vector3(0, 0, 0);
@@ -116,17 +112,18 @@ namespace Assets.Scripts
             }
             else if (numOfMove == 0)
             {
-                Debug.Log("Going down ");
+               // Debug.Log("Going down ");
                 start = new Vector3(0, 100, 0);
                 end = new Vector3(0, 0, 0);
                 numOfMove = -1;
             }
             else if(!moveDone && (previousStart!=Vector3.zero || prevoiusEnd!=Vector3.zero))
             {
-                Debug.Log("resetting");
+                //Debug.Log("resetting");
                 start = previousStart;
                 end = prevoiusEnd;
-            }else if (currentTetromino != aiTetromino)
+            }
+            /*else if (currentTetromino != aiTetromino)
             {
                 Debug.Log("tetr "+currentTetromino+" "+aiTetromino);
                 numOfMove = -1;
@@ -135,7 +132,7 @@ namespace Assets.Scripts
             else
             {
                 Debug.Log("num of move "+numOfMove+" move done:"+moveDone);
-            }
+            }*/
                 
         }
     }

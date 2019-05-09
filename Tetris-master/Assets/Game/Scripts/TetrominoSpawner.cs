@@ -16,6 +16,7 @@ public class TetrominoSpawner : MonoBehaviour {
     private Color[] possibleColors;
     private int nextTetrominoID;
     private Color nextTetrominoColor;
+    public int progressiveNumber=0;
     public int lastInstantiated;
     public bool spawned;
 
@@ -36,7 +37,8 @@ public class TetrominoSpawner : MonoBehaviour {
         }
 
         nextTetrominoID = Random.Range(0, tetrominoes.Length);
-        nextTetrominoColor = possibleColors[Random.Range(0, possibleColors.Length)];
+        //nextTetrominoColor = possibleColors[Random.Range(0, possibleColors.Length)];
+        nextTetrominoColor = possibleColors[nextTetrominoID];
         tetrominoes[nextTetrominoID].nextBlockUI.SetActive(true);
 
         foreach(Transform tt in tetrominoes[nextTetrominoID].nextBlockUI.transform) {
@@ -48,6 +50,9 @@ public class TetrominoSpawner : MonoBehaviour {
         if(canSpawn()) {
             GameObject obj = Instantiate(tetrominoes[nextTetrominoID].prefab);
             lastInstantiated = nextTetrominoID;
+            progressiveNumber++;
+            progressiveNumber %= 100;
+            //Debug.Log(lastInstantiated);
             spawned = true;
             var sprites = obj.GetComponentsInChildren<SpriteRenderer>();
             foreach (var spr in sprites) spr.color = nextTetrominoColor;

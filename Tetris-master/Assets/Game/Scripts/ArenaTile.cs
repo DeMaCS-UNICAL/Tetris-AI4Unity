@@ -37,6 +37,6 @@ public class ArenaTile : MonoBehaviour {
     }
 
     public void tetrominoFalldown() {
-        if (tile != null) tile.fallDown();
+        if (tile != null) tile.fallDownOnce(true);
     }
 }

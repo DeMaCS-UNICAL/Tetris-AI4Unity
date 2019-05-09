@@ -112,26 +112,31 @@ freeUpTo(R):-canPut(R), not canPut(R1),R1=R+1.
 oneMoreRow(R1):-bestSolution(X,Y,C),freeUpTo(R),allFree(R1,C1,C2), extraBottomSpace(X,Y,I,J),R1=R+1,C1=C+I,C2=C+J.
 twoMoreRow(R1):-bestSolution(X,Y,C),oneMoreRow(R),extraRow(X,Y),allFree(R1,C1,C2),extraBottomSpace(X,Y,I,J),R1=R+1,C1=C+I,C2=C+J.
 
-bestRow(R):- freeUpTo(R), not oneMoreRow(R2),R2=R+1.
-bestRow(R):-oneMoreRow(R), not twoMoreRow(R1),R1=R+1.
+bestRow(R):- freeUpTo(R), not oneMoreRow(R2),extraBottomSpace(X,Y,0,0),bestSolution(X,Y,_),R2=R+1.
+bestRow(R1):- freeUpTo(R),R1=R-1, not oneMoreRow(R2),not extraBottomSpace(X,Y,0,0),not extraRow(X,Y),bestSolution(X,Y,_),R2=R+1.
+bestRow(R1):- freeUpTo(R),R1=R-2, not oneMoreRow(R2),not extraBottomSpace(X,Y,0,0),extraRow(X,Y),bestSolution(X,Y,_),R2=R+1.
+bestRow(R):-oneMoreRow(R), not twoMoreRow(R1),not extraRow(X,Y),bestSolution(X,Y,_),R1=R+1.
 bestRow(R):-twoMoreRow(R).
 
 reach(R):-bestSolution(X,Y,_),bestRow(R1),extraTopSpace(X,Y,W),R=R1-W.
 
 
-hole(R1,C1):-bestSolution(X,Y,C),bestRow(R),R1=R+1, tetrominoConfigurationMaxWidth(X,Y,W), myTile(R1,C1,true),C1>=C,C<W1,W1=C+W.
-hole(R,C1):-bestSolution(X,Y,C),extraBottomSpace(X,Y,I,J),L=I+J,L>0,bestRow(R),myTile(R,C1,true),C1>=C,C1<C2,C2=C+I.
-hole(R,C1):-bestSolution(X,Y,C),extraBottomSpace(X,Y,I,J),L=I+J,L>0, bestRow(R), myTile(R,C1,true), tetrominoConfigurationMaxWidth(X,Y,W),C1>=C2, C2=C+J, C1<C3,C3=C+W.
+hole(R1,C1):-bestSolution(X,Y,C),bestRow(R),R1=R+1, tetrominoConfigurationMaxWidth(X,Y,W), myTile(R1,C1,true),C1>=C,C1<W1,W1=C+W.
+hole(R,C1):-bestSolution(X,Y,C),extraBottomSpace(X,Y,I,J),L=I+J,L>0,oneMoreRow(R),myTile(R,C1,true),C1>=C,C1<C2,C2=C+I.
+hole(R,C1):-bestSolution(X,Y,C),extraBottomSpace(X,Y,I,J),L=I+J,L>0, oneMoreRow(R), myTile(R,C1,true), tetrominoConfigurationMaxWidth(X,Y,W),C1>=C2, C2=C+J, C1<C3,C3=C+W.
+hole(R,C1):-bestSolution(X,Y,C),extraBottomSpace(X,Y,I,J),L=I+J,L>0,twoMoreRow(R),myTile(R,C1,true),C1>=C,C1<C2,C2=C+I.
+hole(R,C1):-bestSolution(X,Y,C),extraBottomSpace(X,Y,I,J),L=I+J,L>0, twoMoreRow(R), myTile(R,C1,true), tetrominoConfigurationMaxWidth(X,Y,W),C1>=C2, C2=C+J, C1<C3,C3=C+W.
+
 
 :-#count{R:bestRow(R)}=0.
-:~ #count{R,C:hole(R,C)}=N, #int(N1),#int(N),N1=2*N. [N1:4]
+:~ #count{R,C:hole(R,C)}=N, #int(N1),#int(N),N1=3*N. [N1:4]
 :~ bestRow(R),numOfRows(N),D=N-R. [D:4]
 :~ reach(R),numOfRows(N),D=N-R.  [D:3]
 :~ bestSolution(X,Y,C). [C:2]
 :~ bestSolution(X,Y,C). [Y:1]
 
 
-setOnActuator(player(aI(assetsScriptsAIPlayer(aiTetromino(X))))):-startingConf(X,_).
+setOnActuator(player(aI(assetsScriptsAIPlayer(aiProgressive(X))))):-tetromino(aI(assetsScriptsAIPlayer(currentProgressive(X)))).
 setOnActuator(player(aI(assetsScriptsAIPlayer(numOfMove(X))))):-setOnActuator(player(aI(assetsScriptsAIPlayer(numOfLateralMove(N))))),setOnActuator(player(aI(assetsScriptsAIPlayer(numOfRotation(N1))))),X= N+N1.
 setOnActuator(player(aI(assetsScriptsAIPlayer(numOfLateralMove(N))))):-bestSolution(X,Y,C),spawnColumn(S),leftSpaceWrtSpawn(X,Y,L), N=S-D,D=C+L,D<S.
 setOnActuator(player(aI(assetsScriptsAIPlayer(numOfLateralMove(N))))):-bestSolution(X,Y,C),spawnColumn(S),leftSpaceWrtSpawn(X,Y,L), N=D-S,D=C+L,D>=S.
