@@ -96,7 +96,7 @@ numOfColumns(C2):- #max{C1:myTile(R1,C1,V)}=C,C2=C+1.
 rows(R1):- numOfRows(R),R1>=0,R1<R,#int(R1).
 columns(C1):-numOfColumns(C),C1>=0,C1<C,#int(C1).
 
-startingConf(X,0):-tetromino(aI(assetsScriptsAIPlayer(currentTetromino(X)))).
+startingConf(X,0):-spawner(tetrominoSpawner(tetrominoSpawner(lastInstantiated(X)))).
 
 bestSolution(X,Y,C) v a(X,Y,C):-columns(C),tetrominoConfigurationMaxWidth(X,Y,_),startingConf(X,_).
 :-#count{Y,C:bestSolution(X,Y,C)}>1.
@@ -136,7 +136,7 @@ hole(R,C1):-bestSolution(X,Y,C),extraBottomSpace(X,Y,I,J),L=I+J,L>0, twoMoreRow(
 :~ bestSolution(X,Y,C). [Y:1]
 
 
-setOnActuator(player(aI(assetsScriptsAIPlayer(aiProgressive(X))))):-tetromino(aI(assetsScriptsAIPlayer(currentProgressive(X)))).
+setOnActuator(player(aI(assetsScriptsAIPlayer(aiProgressive(X))))):-spawner(tetrominoSpawner(tetrominoSpawner(progressiveNumber(X)))).
 setOnActuator(player(aI(assetsScriptsAIPlayer(numOfMove(X))))):-setOnActuator(player(aI(assetsScriptsAIPlayer(numOfLateralMove(N))))),setOnActuator(player(aI(assetsScriptsAIPlayer(numOfRotation(N1))))),X= N+N1.
 setOnActuator(player(aI(assetsScriptsAIPlayer(numOfLateralMove(N))))):-bestSolution(X,Y,C),spawnColumn(S),leftSpaceWrtSpawn(X,Y,L), N=S-D,D=C+L,D<S.
 setOnActuator(player(aI(assetsScriptsAIPlayer(numOfLateralMove(N))))):-bestSolution(X,Y,C),spawnColumn(S),leftSpaceWrtSpawn(X,Y,L), N=D-S,D=C+L,D>=S.

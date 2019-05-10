@@ -39,7 +39,7 @@ public class SwipeInput : MonoBehaviour {
                 
                 if (ai.start!=Vector3.zero || ai.end!=Vector3.zero)
                 {
-                    Debug.Log(ai.start+" "+ai.end);
+                    //Debug.Log(ai.start+" "+ai.end);
                     startPosition = ai.start;
                     endPosition = ai.end;
                     checkDirection();
@@ -88,22 +88,22 @@ public class SwipeInput : MonoBehaviour {
     private void checkDirection() {
         float directionHorizontal = endPosition.x - startPosition.x;
         float directionVertical = endPosition.y - startPosition.y;
-        Debug.Log(string.Format("Swipe direction: [{0:0.000}, {1:0.000}]", directionHorizontal, directionVertical));
+        //Debug.Log(string.Format("Swipe direction: [{0:0.000}, {1:0.000}]", directionHorizontal, directionVertical));
 
         if (directionHorizontal < 0 && directionHorizontal + minDistance < 0) {
-            Debug.Log("Swipe left");
+            //Debug.Log("Swipe left");
             if (SwipedLeft != null) SwipedLeft();
         }
         else if (directionHorizontal > 0 && directionHorizontal - minDistance > 0) {
-            Debug.Log("Swipe right");
+            //Debug.Log("Swipe right");
             if (SwipedRight != null) SwipedRight();
         }
         else if(directionVertical > 0 && directionVertical - minDistance > 0) {
-            Debug.Log("Swipe up");
+            //Debug.Log("Swipe up");
             if (SwipedUp != null) SwipedUp();
         }
         else if (directionVertical < 0 && directionVertical + minDistance < 0) {
-            Debug.Log("Swipe down");
+            //Debug.Log("Swipe down");
             if (SwipedDown != null) SwipedDown();
         }
     }

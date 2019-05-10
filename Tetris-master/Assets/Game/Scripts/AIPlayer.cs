@@ -112,7 +112,7 @@ namespace Assets.Scripts
             }
             else if (numOfMove == 0)
             {
-               // Debug.Log("Going down ");
+                //Debug.Log("Going down ");
                 start = new Vector3(0, 100, 0);
                 end = new Vector3(0, 0, 0);
                 numOfMove = -1;

@@ -17,7 +17,7 @@ public class Arena : MonoBehaviour {
     public int maxTileY { get { return _maxTileY; } private set { _maxTileY = value; } }
 
     void Awake() {
-        Debug.Log("Awaken");
+        //Debug.Log("Awaken");
         maxTileX = transform.GetChild(0).childCount;
         maxTileY = transform.childCount;
         tile = new ArenaTile[maxTileX, maxTileY];
