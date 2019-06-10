@@ -52,6 +52,39 @@ namespace Assets.Scripts
             
         }*/
 
+        /* 
+        public void gestisciCervello()
+
+        {
+            while(true)
+            foreach brain 
+                if (brain.areActuatorsReady())
+                    if(brain.Act())
+                        brain.updateProperties()
+            yield 
+
+        }
+        public void gestisciPiani()
+        {
+            while(true)
+               foreach piano
+                    piano.doMove()
+        }
+        public void doMove()
+        {
+            if piano.active()
+            {
+                piano.numOfMove--
+
+                piano.faiLaMossaDi
+            }
+        }
+
+         piano = [ rotate, rotate, rotate, moveleft, moveleft, drop ]
+            piano.setTime(jdjdj);
+
+         addPiano(piano)
+*/
         public void move()
         {
             
