@@ -89,7 +89,7 @@ extraRow(1,2).
 extraRow(2,2).
 
 spawnColumn(4).
-myTile(R,C,V):-arenaGrid(arena(arena(tile(C,R,arenaTile(empty(V)))))).
+myTile(R,C,V):-arenaGrid(arena(arena(tiles(C,R,arenaTile(empty(V)))))).
 numOfRows(R2):- #max{R1:myTile(R1,C,V)}=R, R2=R+1.
 numOfColumns(C2):- #max{C1:myTile(R1,C1,V)}=C,C2=C+1.
 

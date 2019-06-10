@@ -6,13 +6,13 @@ using System;
 
 [ExecuteInEditMode]
 public class Arena : MonoBehaviour {
-    private ArenaTile[,] _tile;
+    private ArenaTile[,] _tiles;
     private int _maxTileX;
     private int _maxTileY;
     private Game game;
     private Queue<int> rowsToCheck;
 
-    public ArenaTile[,] tile { get { return _tile; } private set { _tile = value; } }
+    public ArenaTile[,] tile { get { return _tiles; } private set { _tiles = value; } }
     public int maxTileX { get { return _maxTileX; } private set { _maxTileX = value; } }
     public int maxTileY { get { return _maxTileY; } private set { _maxTileY = value; } }
 

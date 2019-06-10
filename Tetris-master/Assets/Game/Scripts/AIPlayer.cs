@@ -20,10 +20,10 @@ namespace Assets.Scripts
         int numOfLateralMove;
         int numOfRotation;
         string typeOfLateralMove = "";//left, right
-        int currentProgressive;
+        public int currentProgressive;
         bool tetrominoChanged;
         int currentTetromino;
-        int aiProgressive;
+        public int aiProgressive;
         public bool moveDone;
         Brain brain;
         TetrominoSpawner spawner;
@@ -58,7 +58,7 @@ namespace Assets.Scripts
             //Debug.Log("trying to move");
             currentTetromino = spawner.lastInstantiated;
             currentProgressive = spawner.progressiveNumber;
-            if (brain.areActuatorsReady() && currentProgressive != aiProgressive)
+            /*if (brain.areActuatorsReady() && currentProgressive != aiProgressive)
             {
                 //Debug.Log("updating actuators");
                 moveDone = true;
@@ -69,7 +69,7 @@ namespace Assets.Scripts
                 brain.setActuatorsReady(false);
                 start = Vector3.zero;
                 end = Vector3.zero;
-            }
+            }*/
             
             if (currentProgressive == aiProgressive && numOfMove > 0 && moveDone)
             {

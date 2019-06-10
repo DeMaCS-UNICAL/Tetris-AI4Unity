@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using System;
 using UnityEngine;
 
@@ -5,11 +6,13 @@ using UnityEngine;
 public class Trigger:ScriptableObject{
     private int tetrominoProgr;
     private TetrominoSpawner spawner;
+    private AIPlayer player;
 
     void Awake()
     {
         tetrominoProgr = 0;
         spawner = GameObject.FindObjectOfType<TetrominoSpawner>();
+        player = GameObject.FindObjectOfType<AIPlayer>();
     }
     public bool spawned()
     {
@@ -20,5 +23,10 @@ public class Trigger:ScriptableObject{
             return true;
         }
         return false;
+    }
+    public bool applyActuatorsForAIPlayer()
+    {
+        Debug.Log("check if to apply");
+        return player.currentProgressive != player.aiProgressive;
     }
 }
